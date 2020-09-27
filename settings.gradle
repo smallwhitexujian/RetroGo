@@ -1,0 +1,3 @@
+include ':RetroNet'
+include ':app'
+rootProject.name = "RetroGO"
