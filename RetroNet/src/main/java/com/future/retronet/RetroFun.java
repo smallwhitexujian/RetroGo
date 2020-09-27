@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
 
 public class RetroFun<T> implements Function<ResponseBody, T> {

@@ -15,7 +15,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -33,15 +39,15 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //添加网络Retrofit网络请求框架
-    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.7.0'
+    api 'com.squareup.retrofit2:retrofit:2.7.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.7.0'
     //okHttp网络请求 log
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    api 'com.squareup.okhttp3:logging-interceptor:4.2.2'
     //添加解析器 Gson
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
+    api 'com.squareup.retrofit2:converter-gson:2.7.0'
     //RxJAVA
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.13'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //日志打印
     implementation 'com.jakewharton.timber:timber:4.7.1'

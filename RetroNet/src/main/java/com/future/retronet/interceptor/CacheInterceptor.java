@@ -13,11 +13,8 @@ import com.future.retronet.cache.HttpCache;
 import com.future.retronet.header.HeaderKey;
 import com.future.retronet.logger.LogUtil;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.HashMap;
 
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;

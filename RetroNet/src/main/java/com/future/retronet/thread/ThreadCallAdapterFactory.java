@@ -4,18 +4,18 @@ package com.future.retronet.thread;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * 获取当前注解设置的线程模式，然后根据设置返回线程进行切换线程
  */
 public class ThreadCallAdapterFactory extends CallAdapter.Factory {
 
-    private RxJavaCallAdapterFactory rxFactory = RxJavaCallAdapterFactory.create();
+    private RxJava2CallAdapterFactory rxFactory = RxJava2CallAdapterFactory.create();
 
     public ThreadCallAdapterFactory() {
     }

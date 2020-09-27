@@ -7,7 +7,7 @@ import com.future.retronet.interceptor.RetroCodeInterceptor
 import com.future.retronet.logger.LogUtil
 import com.future.retronet.request.*
 import com.google.gson.Gson
-import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import io.reactivex.plugins.RxJavaPlugins
 import okhttp3.OkHttpClient
 
 /**
@@ -85,6 +85,17 @@ object RetroNet {
     fun removeRespCodeInteceptor(inteceptor: RetroCodeInterceptor?) {
         respCodeInterceptorList?.remove(inteceptor)
     }
+    @JvmStatic
+    fun <T> create(service: Class<T>): T {
+        LogUtil.d(" create service 1: " + service.simpleName + "    " +
+                " myPid : " + Process.myPid() + "  mDefaultConfig == null" +
+                (mDefaultConfig == null).toString())
+        if (mDefaultConfig == null) {
+            throw java.lang.RuntimeException("mDefaultConfig == null, you must set a default config before!")
+        }
+        return Api.provide(mDefaultConfig).create(service)
+    }
+
 
     @JvmStatic
     fun <T> create(clientConfig: Class<out Config?>?, service: Class<T>): T {

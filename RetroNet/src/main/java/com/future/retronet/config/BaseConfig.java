@@ -4,6 +4,9 @@ package com.future.retronet.config;
 import android.text.TextUtils;
 
 import com.future.retronet.RetroNet;
+import com.future.retronet.cache.HttpCache;
+import com.future.retronet.interceptor.CacheInterceptor;
+import com.future.retronet.interceptor.MainInterceptor;
 import com.future.retronet.interceptor.RetroLogInterceptor;
 import com.future.retronet.thread.ThreadCallAdapterFactory;
 
@@ -19,6 +22,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public abstract class BaseConfig implements Config {
+
+    protected String cachePath() {
+        return RetroNet.INSTANCE.getContext().getExternalCacheDir() + "/http-cache";
+    }
+
     @Override
     public void build(Retrofit.Builder builder) {
         builder.client(client());//Retrofit 绑定OkHttpClient
@@ -48,10 +56,14 @@ public abstract class BaseConfig implements Config {
     @Override
     public OkHttpClient client() {
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();//创建OkHttpClient网络请求
-        okHttpClientBuilder.addInterceptor(new RetroLogInterceptor());//添加网络拦截器
+        okHttpClientBuilder.addInterceptor(new MainInterceptor());
+        okHttpClientBuilder.addNetworkInterceptor(new RetroLogInterceptor());//添加网络拦截器
+        client(okHttpClientBuilder);
+        okHttpClientBuilder.addInterceptor(new CacheInterceptor());
+        okHttpClientBuilder.cache(HttpCache.getCache(cachePath()));
         okHttpClientBuilder.retryOnConnectionFailure(true);//设置重试，默认重试
         okHttpClientBuilder.connectTimeout(5000, TimeUnit.MILLISECONDS);//设置默认连接长度5秒
-        return null;
+        return okHttpClientBuilder.build();
     }
 
     protected abstract void client(OkHttpClient.Builder clientBuilder);

@@ -25,8 +25,7 @@ class Api {
     private Api() {
     }
 
-    static @Nullable
-    OkHttpClient getOkHttpClient(Class<? extends Config> clientConfig) {
+    static @Nullable OkHttpClient getOkHttpClient(Class<? extends Config> clientConfig) {
         okhttp3.Call.Factory callFactory = provide(clientConfig).retrofit.callFactory();
         if (callFactory instanceof OkHttpClient) {
             return (OkHttpClient) callFactory;

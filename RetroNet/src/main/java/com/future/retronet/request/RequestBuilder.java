@@ -1,8 +1,5 @@
 package com.future.retronet.request;
 
-import android.annotation.SuppressLint;
-import android.service.carrier.CarrierMessagingService;
-import android.util.Log;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
@@ -14,7 +11,6 @@ import com.future.retronet.RetroBean;
 import com.future.retronet.RetroCode;
 import com.future.retronet.RetroException;
 import com.future.retronet.RetroFun;
-import com.future.retronet.RetroNet;
 import com.future.retronet.StructType;
 import com.future.retronet.Uitls.Utils;
 import com.future.retronet.cache.CacheStrategy;
@@ -29,19 +25,17 @@ import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.CheckReturnValue;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.ObservableSource;
-import io.reactivex.rxjava3.core.ObservableTransformer;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.functions.Predicate;
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.CheckReturnValue;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
+import io.reactivex.subjects.PublishSubject;
 import okhttp3.ResponseBody;
-
-import static androidx.lifecycle.Lifecycle.*;
 
 public class RequestBuilder<B extends RequestBuilder> implements LifecycleObserver {
     private String mUrl;
@@ -54,7 +48,7 @@ public class RequestBuilder<B extends RequestBuilder> implements LifecycleObserv
     private Class<? extends Config> mConfigClass;
 
     private LifecycleOwner lifecycleOwner = null;
-    private PublishSubject<Event> lifecycleSubject = PublishSubject.create();
+    private PublishSubject<Lifecycle.Event> lifecycleSubject = PublishSubject.create();
 
     public RequestBuilder(Method method, Class<? extends Config> mConfigClass) {
         mMethod = method;
@@ -134,11 +128,11 @@ public class RequestBuilder<B extends RequestBuilder> implements LifecycleObserv
         return (B) this;
     }
 
-    @OnLifecycleEvent(Event.ON_DESTROY)
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void onDestroy() {
         LogUtil.e("OnLifecycleEvent  ON_DESTROY");
         if (lifecycleSubject != null) {
-            lifecycleSubject.onNext(Event.ON_DESTROY);
+            lifecycleSubject.onNext(Lifecycle.Event.ON_DESTROY);
         }
         if (lifecycleOwner != null) {
             lifecycleOwner.getLifecycle().removeObserver(this);
@@ -180,15 +174,15 @@ public class RequestBuilder<B extends RequestBuilder> implements LifecycleObserv
     }
 
     private class LifecycleTransformer<T> implements ObservableTransformer<T, T> {
-        io.reactivex.rxjava3.core.@NonNull Observable<?> observable;
+        Observable<?> observable;
 
-        LifecycleTransformer(io.reactivex.rxjava3.core.@NonNull Observable<?> observable) {
+        LifecycleTransformer(Observable<?> observable) {
             this.observable = observable;
         }
 
 
         @Override
-        public @NonNull ObservableSource<T> apply(io.reactivex.rxjava3.core.@NonNull Observable<T> upstream) {
+        public ObservableSource<T> apply(Observable<T> upstream) {
             return upstream.takeUntil(observable);
         }
     }
@@ -197,7 +191,7 @@ public class RequestBuilder<B extends RequestBuilder> implements LifecycleObserv
     @CheckReturnValue
     private <T> LifecycleTransformer<T> bindUntilEvent(@NonNull final Lifecycle.Event lifeCycleEvent) {
 
-        Observable<Lifecycle.Event> compareLifecycleObservable = lifecycleSubject.filter(new Predicate<Event>() {
+        Observable<Lifecycle.Event> compareLifecycleObservable = lifecycleSubject.filter(new Predicate<Lifecycle.Event>() {
             @Override
             public boolean test(Lifecycle.Event event) throws Exception {
                 LogUtil.e("bindUntilEvent filter:" + event);
@@ -250,7 +244,7 @@ public class RequestBuilder<B extends RequestBuilder> implements LifecycleObserv
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Object>() {
                                @Override
-                               public void accept(Object result) throws Throwable {
+                               public void accept(Object result) {
                                    if (callback != null) {
                                        if (result != null) {
                                            if (result instanceof RetroBean) {
@@ -270,7 +264,7 @@ public class RequestBuilder<B extends RequestBuilder> implements LifecycleObserv
                                }
                            }, new Consumer<Throwable>() {
                                @Override
-                               public void accept(Throwable throwable) throws Throwable {
+                               public void accept(Throwable throwable) {
                                    if (callback != null) {
                                        callback.onError(RetroCode.CODE_ERR_IO, new RetroException(RetroCode.CODE_ERR_IO, throwable.getMessage()));
                                    }

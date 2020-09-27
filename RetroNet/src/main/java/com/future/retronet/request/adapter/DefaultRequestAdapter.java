@@ -5,7 +5,7 @@ import com.future.retronet.RetroNet;
 import com.future.retronet.request.BodyRequestBuilder;
 import com.future.retronet.request.RequestBuilder;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 
 public class DefaultRequestAdapter implements RequestAdapter {
