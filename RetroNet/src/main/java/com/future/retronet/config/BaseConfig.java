@@ -58,11 +58,11 @@ public abstract class BaseConfig implements Config {
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();//创建OkHttpClient网络请求
         okHttpClientBuilder.addInterceptor(new MainInterceptor());
         okHttpClientBuilder.addNetworkInterceptor(new RetroLogInterceptor());//添加网络拦截器
-        client(okHttpClientBuilder);
         okHttpClientBuilder.addInterceptor(new CacheInterceptor());
         okHttpClientBuilder.cache(HttpCache.getCache(cachePath()));
         okHttpClientBuilder.retryOnConnectionFailure(true);//设置重试，默认重试
         okHttpClientBuilder.connectTimeout(5000, TimeUnit.MILLISECONDS);//设置默认连接长度5秒
+        client(okHttpClientBuilder);
         return okHttpClientBuilder.build();
     }
 

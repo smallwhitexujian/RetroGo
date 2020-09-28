@@ -28,15 +28,16 @@ class MainActivity : Activity() {
 
         btn2.setOnClickListener {
             var call: Call<Any>? = service.gettest2()
-            call?.enqueue(object :Callback<Any>{
+            call?.enqueue(object : Callback<Any> {
                 override fun onFailure(call: Call<Any>, t: Throwable) {
                     LogUtil.e("============>$t")
                 }
 
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                    LogUtil.e("============>$response")
-                }
+                    var res = response.body().toString();
+                    LogUtil.e("============>$res")
 
+                }
             })
         }
     }
