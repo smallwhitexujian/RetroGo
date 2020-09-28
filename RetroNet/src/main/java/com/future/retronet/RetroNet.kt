@@ -85,6 +85,7 @@ object RetroNet {
     fun removeRespCodeInteceptor(inteceptor: RetroCodeInterceptor?) {
         respCodeInterceptorList?.remove(inteceptor)
     }
+
     @JvmStatic
     fun <T> create(service: Class<T>): T {
         LogUtil.d(" create service 1: " + service.simpleName + "    " +

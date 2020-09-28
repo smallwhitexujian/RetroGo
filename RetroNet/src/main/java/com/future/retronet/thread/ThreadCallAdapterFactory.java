@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
- * 获取当前注解设置的线程模式，然后根据设置返回线程进行切换线程
+ * 扩展的是对网络工作对象callWorker的自动转换，把Retrofit中执行网络请求的Call对象，转换为接口中定义的Call对象
  */
 public class ThreadCallAdapterFactory extends CallAdapter.Factory {
 

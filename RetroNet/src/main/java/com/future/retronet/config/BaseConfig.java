@@ -82,7 +82,7 @@ public abstract class BaseConfig implements Config {
 
 
     /**
-     * 为对象的序列化和反序列化添加转换器工厂
+     * 扩展的是对返回的数据类型的自动转换，把一种数据对象转换为另一种数据对象。
      *
      * @param builder
      */
@@ -103,8 +103,7 @@ public abstract class BaseConfig implements Config {
     }
 
     /**
-     * 添加调用适配器工厂
-     * 根据返回数据类型去适配解析
+     * addCallAdapterFactory 扩展的是对网络工作对象call的自动转换，把Retrofit中执行网络请求的Call对象，转换为接口中定义的Call对象。
      * @param builder
      */
     private void addCallAdapterFactory(Retrofit.Builder builder) {
