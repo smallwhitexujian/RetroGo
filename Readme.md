@@ -1,5 +1,11 @@
 ### 使用说明
 
+已经发布Jcenter仓库，
+
+使用本库只需要添加
+
+`implementation 'com.retro:RetroGo:1.0.1'`即可
+
 初始化Application创建的时候初始化
 
 ```java
@@ -46,7 +52,6 @@ public interface TestService {
     @GET("/iqx/master")//使用OKhttp Call方式回调请求结果
     Call<RetroBean<Object>> gettest2();
 }
-
 ```
 
 获取结果可以如下：

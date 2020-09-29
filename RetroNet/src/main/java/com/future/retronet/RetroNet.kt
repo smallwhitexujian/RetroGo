@@ -5,6 +5,7 @@ import android.os.Process
 import com.future.retronet.config.Config
 import com.future.retronet.interceptor.RetroCodeInterceptor
 import com.future.retronet.logger.LogUtil
+import com.future.retronet.logger.TimberUtil
 import com.future.retronet.request.*
 import com.google.gson.Gson
 import io.reactivex.plugins.RxJavaPlugins
@@ -43,6 +44,9 @@ object RetroNet {
         respCodeInterceptorList = ArrayList<RetroCodeInterceptor>()
         setDefaultConfig(clientConfig)
         LogUtil.setIsDebug(debug)
+        if (debug){
+            TimberUtil.setLogAuto()
+        }
         RxJavaPlugins.setErrorHandler(RetroErrorHandler())
     }
 

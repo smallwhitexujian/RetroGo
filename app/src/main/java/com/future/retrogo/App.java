@@ -11,7 +11,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        TimberUtil.setLogAuto();
         HttpHelper.init(this, true, url);
     }
 }
