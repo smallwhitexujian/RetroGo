@@ -41,10 +41,10 @@ public class DefaultHttpConfig extends BaseConfig {
 ```java
 public interface TestService {
     @GET("/iqx/master")//RxJAVA模式通过观察者方式回调结果
-    Observable<Object> gettest();
+    Observable<RetroBean<Object>> gettest();
 
     @GET("/iqx/master")//使用OKhttp Call方式回调请求结果
-    Call<Object> gettest2();
+    Call<RetroBean<Object>> gettest2();
 }
 
 ```
@@ -53,12 +53,15 @@ public interface TestService {
 
 ```java
  findViewById<View>(R.id.btn).setOnClickListener {
-            service.gettest()
-                .subscribe({ carBeans -> // 处理数据 直接获取到List<JavaBean> carBeans
+           service.gettest().subscribe({ carBeans -> // 处理数据 直接获取到List<JavaBean> carBeans
                     LogUtil.e("============>$carBeans")
+                    if (carBeans.code == 200){
+                        LogUtil.e("============>$carBeans")
+                    }
                 }) { throwable -> // 处理异常
                     LogUtil.e("============>$throwable")
-                }
+              } 
+           }
         }
 
         btn2.setOnClickListener {

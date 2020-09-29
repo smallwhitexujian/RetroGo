@@ -2,6 +2,20 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.novoda.bintray-release'
+
+
+publish {
+    repoName = 'AndroidLib'//远程仓库名字,不指明，默认是上传到maven
+    userOrg = 'xj62636150' //bintray账户下某个组织id-不可自定义
+    groupId = 'public' //maven仓库下库的包名，一般为模块包名，自定义
+    artifactId = 'RetroGo' //项目名称-自定义
+    publishVersion = '1.0.2' //版本号-自定义
+    desc = 'android' //项目介绍，可以不写
+    website = 'xxx' //项目主页，可以不写
+}
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -30,6 +44,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -54,3 +72,100 @@ dependencies {
     implementation 'commons-io:commons-io:2.6'
 
 }
+
+//install {
+//    repositories.mavenInstaller {
+//        // 生成pom.xml和参数
+//        pom {
+//            project {
+//                packaging 'aar'
+//                // 项目描述，复制我的话，这里需要修改。
+//                name 'RetroGo'// 可选，项目名称。
+////                description 'The Android build the framework of the Http server.'// 可选，项目描述。
+////                url siteUrl // 项目主页，这里是引用上面定义好。
+//
+//                // 软件开源协议，现在一般都是Apache License2.0吧，复制我的，这里不需要修改。
+//                licenses {
+//                    license {
+//                        name 'The Apache Software License, Version 2.0'
+//                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    }
+//                }
+//
+//                //填写开发者基本信息，复制我的，这里需要修改。
+//                developers {
+//                    developer {
+//                        id 'xj626361950' // 开发者的id。
+//                        name 'xj626361950' // 开发者名字。
+//                        email 'xj626361950@163.com' // 开发者邮箱。
+//                    }
+//                }
+//
+////                // SCM，复制我的，这里不需要修改。
+////                scm {
+////                    connection gitUrl // Git仓库地址。
+////                    developerConnection gitUrl // Git仓库地址。
+////                    url siteUrl // 项目主页。
+////                }
+//
+//                dependencies{
+//                    dependency{
+//                        groupId "public"
+//                        version "1.0.1"
+//                        artifactId "RetroGo"
+//                        scope "compile"
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//// 生成jar包的task，不需要修改。
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//// 生成jarDoc的task，不需要修改。
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//    // destinationDir = file("../javadoc/")
+//    failOnError false // 忽略注释语法错误，如果用jdk1.8你的注释写的不规范就编译不过。
+//}
+//// 生成javaDoc的jar，不需要修改。
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
+//
+//Properties properties = new Properties();
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//def bintray_user = properties.getProperty("bintray.user")
+//def bintray_key = properties.getProperty("bintray.apikey")
+//def bintray_gpg_pwd = properties.getProperty("bintray.gpg.password")
+//
+//bintray {
+//    user = bintray_user
+//    key = bintray_key
+//    configurations = ['archives']
+//
+//    pkg {
+//        repo = "androidLibary"
+//        name = "mavenlibrary"
+////        userOrg = "angryboby"
+//        licenses = ["Apache-2.0"]
+//        publish = true
+//        version{
+//            gpg{
+//                sign = true
+//                passphrase = bintray_gpg_pwd
+//            }
+//        }
+//    }
+//}
