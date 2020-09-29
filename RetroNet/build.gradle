@@ -6,13 +6,13 @@ apply plugin: 'com.novoda.bintray-release'
 
 
 publish {
-    repoName = 'AndroidLib'//远程仓库名字,不指明，默认是上传到maven
     userOrg = 'xj62636150' //bintray账户下某个组织id-不可自定义
-    groupId = 'public' //maven仓库下库的包名，一般为模块包名，自定义
-    artifactId = 'RetroGo' //项目名称-自定义
-    publishVersion = '1.0.2' //版本号-自定义
-    desc = 'android' //项目介绍，可以不写
-    website = 'xxx' //项目主页，可以不写
+    repoName = 'AndroidMaven'//远程仓库名字,不指明，默认是上传到maven
+    groupId = 'com.retro' //maven仓库下库的包名，一般为模块包名，自定义
+    artifactId ='RetroGo' //项目名称-自定义 bintray包的名称
+    publishVersion = '1.0.1' //版本号-自定义
+    desc = 'android网络库的封装' //项目介绍，可以不写
+    website = 'https://gitee.com/xjdd/retro-net' //项目主页，可以不写
 }
 
 
