@@ -5,6 +5,17 @@
 使用本库只需要添加
 
 `implementation 'com.retro:RetroGo:1.0.1'`即可
+仓库重新升级原先Jcenter不在更新
+在根目录build.gradle 添加
+```groovy
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://www.jitpack.io' }
+    }
+```
+需要应用的仓库下添加
+`implementation 'com.github.smallwhitexujian:RetroGo:1.0.0'`
 
 初始化Application创建的时候初始化
 
