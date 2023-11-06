@@ -4,10 +4,10 @@ name: Android CI
 on:
   # 推送之后触发的jobs
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   # 拉取之后触发的
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   test:
